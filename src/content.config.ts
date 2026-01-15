@@ -49,7 +49,6 @@ const testimonials = defineCollection({
 
 // other pages
 const otherPages = defineCollection({
-	// type: "content",
 	loader: glob({
 		pattern: "**/[^_]*.{md,mdx}",
 		base: "./src/data/otherPages",
@@ -58,9 +57,13 @@ const otherPages = defineCollection({
 		z.object({
 			title: z.string(),
 			description: z.string(),
+			name: z.string(),
+			signature: z.string(),
+			image: z.string(),
 			draft: z.boolean().optional(),
 		}),
 });
+
 
 export const collections = {
 	portfolios,

@@ -1,5 +1,4 @@
 ---
-import About from "@components/About/About.astro";
 import Button from "@components/Button/Button.astro";
 import Contact from "@components/Contact/Contact.astro";
 import FeatureNumbers from "@components/Feature/FeatureNumbers.astro";
@@ -13,6 +12,14 @@ import siteData from "@config/siteData.json";
 // layout
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { Image } from "astro:assets";
+import About from "@components/About/About.astro";
+import { getCollection } from "astro:content";
+
+const pages = await getCollection("otherPages");
+const about = pages.find(p => p.slug === "about");
+if (!about) {
+	throw new Error("About page not found in otherPages collection");
+}
 ---
 
 <BaseLayout title={siteData.title} description={siteData.description} navStartStyle="white">
@@ -21,6 +28,13 @@ import { Image } from "astro:assets";
 	<PortfolioThreeCards />
 	<Testimonials />
 	<PricingThreeCards />
-	<About />
+	<About
+		sectionTitle={about.data.sectionTitle}
+		name={about.data.name}
+		signature={about.data.signature}
+		image={about.data.image}
+		body={about.body}
+	/>
+
 	<Contact />
 </BaseLayout>
